@@ -1,0 +1,94 @@
+.App {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 30px;
+    gap: 60px;
+  }
+  
+  /* App.css (or your preferred CSS file) */
+  
+  .pictures {
+   /* margin: 0 10px;
+    display: inline-block;
+    padding: 10px; 
+    border: 1px dashed gray;
+    cursor: pointer; 
+    user-select: none; 
+    transition: background-color 0.3s; 
+  
+     
+    width: 200px;
+    height: 200px; */
+
+    display : flex;
+    flex-direction: column;
+
+
+  }
+  
+  .pictures img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Preserve image aspect ratio and cover the container */
+  }
+  
+  /* Apply a different border color when hovering over the picture */
+  .pictures:hover {
+    border-color: blue;
+    background-color: #f0f0f0; /* Highlight the picture when hovered */
+  }
+  
+  /* Add styles for the dragged state */
+  .pictures.is-dragging {
+    opacity: 0.5; /* Reduce opacity of the dragged picture */
+    border-style: dashed;
+  }
+  
+
+  @media screen and (max-width: 340px){
+
+    .App{
+      gap:25px;
+    }
+
+    .pictures{
+      margin: 0px 20px;
+
+    }
+  }
+
+  @media screen and (max-width: 414px){
+
+    .App{
+      gap:25px;
+    }
+
+    .pictures{
+      margin: 0px 50px; /* 20 */
+
+    }
+  }
+  @media screen and (max-width: 360px){
+
+    .App{
+      gap:25px;
+    }
+
+    .pictures{
+      margin: 0px 30px;
+
+    }
+  }
+
+  @media screen and (max-width: 412px){
+
+    .App{
+      gap:25px;
+    }
+
+    .pictures{
+      margin: 0px 55x;
+
+    }
+  }
