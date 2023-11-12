@@ -6,11 +6,47 @@ import Pic from "./Pic";
 import Jumbotron from "./jumbotron";
 import useAxios from "../hooks/useAxios";
 import { Container } from "react-bootstrap";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import {auth} from "./firebase";
+import { useNavigate } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
+
 
 
 export const ImageContext = createContext();
 
 const Homepage = () => {
+
+  const history = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        setUser(user);
+      } else {
+        // User is signed out
+        setUser(null);
+      }
+    });
+    
+    // Cleanup the subscription when the component unmounts
+    return () => unsubscribe();
+    }, [auth]);
+
+  const handleSignOut = () => signOut(auth).then(() => {
+    setUser(null);
+    history('/');
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+    const errorCode = error.code;
+    alert(errorCode);
+  });
+
+
   const { response, isLoading, error, fetchData } = useAxios(
     `/search/photos?page=1&query=cat&client_id=M_j6Z69MD1mDFeBLOxrvIuNeR_uqxca_nYMeINfQKyc`
   );
@@ -46,13 +82,25 @@ const Homepage = () => {
     fetchData,
   };
 
+  
   return (
+    <>
     <ImageContext.Provider value={value}>
       <Jumbotron />
       <DndProvider backend={HTML5Backend}>
         <Container fluid>
         <div className="App">
-          {images.map((data, index) => (
+          {isLoading
+                ? images.map((data, index) => (
+                    <Skeleton key={data.id}
+                    id={data.id}
+                    index={index}
+                    animation="wave"
+                    variant="rectangular"
+                    style={{ width: "200px", height: "200px", borderRadius: "10px" }}
+                     />
+                  ))
+                :images.map((data, index) => (
             <Pic
               key={data.id}
               src={data.urls.small}
@@ -63,9 +111,16 @@ const Homepage = () => {
             />
           ))}
         </div>
+        <>
+        <div>
+          <button className="float-left me-1" onClick={handleSignOut}></button>
+        </div>
+        </>
         </Container>
       </DndProvider>
     </ImageContext.Provider>
+    
+    </>
   );
 };
 

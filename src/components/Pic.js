@@ -50,8 +50,8 @@ const Pic = ({ src, alt, id, index, onImageDrop }) => {
 
   return (
     <div className="pictures" ref={ref}>
-      <img src={src} alt={alt} style={{ width: "200px", height: "200px" }} />
-    </div>
+      <img src={src} alt={alt} style={{ width: "200px", height: "200px", borderRadius: "10px" }} />
+      </div>
   );
 };
 

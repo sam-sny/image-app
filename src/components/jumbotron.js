@@ -18,6 +18,12 @@ const Jumbotron = () => {
     setSearchValue("");
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleButtonSearch();
+    }
+  };
+
  
     return (
         <div className="text-center bg-secondary">
@@ -31,6 +37,7 @@ const Jumbotron = () => {
                aria-describedby="search-button"
                value={searchValue}
                onChange={handleInputChange}
+               onKeyDown={handleKeyPress}
               />
                <div className="input-group-append">
                 <button onClick={handleButtonSearch} className="btn btn-primary" 
